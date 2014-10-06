@@ -1,0 +1,27 @@
+rate_limit_meter_get:
+    pattern:  /meter.{_format}
+    defaults: { _controller: perimeter.rate_limit.meter_api_controller:getAction, _format: json }
+    methods:  [GET]
+    requirements:
+        _format: json|xml
+
+rate_limit_meter_post:
+    pattern:  /meter.{_format}
+    defaults: { _controller: perimeter.rate_limit.meter_api_controller:postAction, _format: json }
+    methods:  [POST]
+    requirements:
+        _format: json|xml
+
+rate_limit_meter_put:
+    pattern:  /meter.{_format}
+    defaults: { _controller: perimeter.rate_limit.meter_api_controller:putAction, _format: json }
+    methods:  [PUT]
+    requirements:
+        _format: json|xml
+
+rate_limit_meter_delete:
+    pattern:  /meter.{_format}
+    defaults: { _controller: perimeter.rate_limit.meter_api_controller:deleteAction, _format: json }
+    methods:  [DELETE]
+    requirements:
+        _format: json|xml

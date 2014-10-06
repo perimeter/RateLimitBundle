@@ -1,0 +1,16 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+env:
+  - CONTAINER_CONFIG=Tests/Resources/config/services.xml
+  - UPDATE_DOCTRINE_DB=true
+before_script:
+  - composer install
+  - cp phpunit.xml.dist phpunit.xml
+  - mysql -e 'create database oauth2_server_bundle;'
+
+script:
+  - phpunit
