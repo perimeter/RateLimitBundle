@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Perimeter RateLimitBundle",
     "keywords": ["ratelimit", "api", "api-gateway", "perimeter"],
-    "homepage": "http://github.com/perimeter/rate-limit-bundle",
+    "homepage": "http://github.com/perimeter/RateLimitBundle",
     "license": "MIT",
     "authors": [
         {
