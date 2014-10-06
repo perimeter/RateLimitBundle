@@ -1,6 +1,8 @@
 Perimeter RateLimitBundle
 =========================
 
+[![Build Status](https://travis-ci.org/perimeter/RateLimitBundle.svg?branch=develop)](https://travis-ci.org/perimeter/RateLimitBundle)
+
 Rate Limit those APIs!
 
 Installation

@@ -5,12 +5,13 @@ php:
   - 5.4
   - 5.5
 env:
-  - CONTAINER_CONFIG=Tests/Resources/config/services.xml
-  - UPDATE_DOCTRINE_DB=true
+  global:
+    - CONTAINER_CONFIG=Tests/Resources/config/services.xml
+    - UPDATE_DOCTRINE_DB=true
 before_script:
   - composer install
   - cp phpunit.xml.dist phpunit.xml
-  - mysql -e 'create database oauth2_server_bundle;'
+  - mysql -e 'create database perimeter;'
 
 script:
   - phpunit
