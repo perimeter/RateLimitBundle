@@ -9,7 +9,7 @@
         <parameter key="perimeter.rate_limit.throttler.redis.class">Perimeter\RateLimitBundle\Throttler\RedisThrottler</parameter>
         <parameter key="perimeter.rate_limit.throttler.doctrine.class">Perimeter\RateLimitBundle\Throttler\DoctrineThrottler</parameter>
         <parameter key="perimeter.rate_limit.redis_client.class">Predis\Client</parameter>
-        <parameter key="parimeter.rate_limit.warn_threshold.default">80</parameter>
+        <parameter key="perimeter.rate_limit.warn_threshold.default">80</parameter>
         <parameter key="perimeter.rate_limit.limit_threshold.default">100</parameter>
         <parameter key="perimeter.rate_limit.storage.memory.meters" type="collection">
             <parameter key="*" type="collection">
