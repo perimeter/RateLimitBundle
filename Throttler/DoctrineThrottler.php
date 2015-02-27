@@ -20,17 +20,18 @@ class DoctrineThrottler implements ThrottlerInterface
 
     protected $isLimitWarning;
     protected $isLimitExceeded;
-    protected $bucketSize;
-    protected $ratePeriod;
-    protected $numBuckets;
+    protected $config;
 
-    public function __construct(EntityManagerInterface $em, $bucketSize = 60, $numBuckets = 5, $ratePeriod = 3600)
+    public function __construct(EntityManagerInterface $em, $config = array())
     {
         $this->_em = $em;
-        $this->ratePeriod = $ratePeriod;
-        $this->bucketSize = $bucketSize;
-        $this->numBuckets = $numBuckets;
-        $this->ratePeriod = $ratePeriod;
+
+        $this->config = array_merge(array(
+            'server_count' => 1,
+            'num_buckets'  => 5,
+            'bucket_size'  => 60,
+            'rate_period'  => 3600,
+        ), $config);
     }
 
     public function consume($meterId, $warnThreshold, $rateThreshold, $numTokens = 1, $throttleMilliseconds = 0, $time = null)
@@ -40,7 +41,7 @@ class DoctrineThrottler implements ThrottlerInterface
         if ($bucket) {
             // increment the tokens
             $bucket->tokens += $numTokens;
-            $tokens = ($average + $numTokens) * $this->numBuckets;
+            $tokens = ($average + $numTokens) * $this->config['num_buckets'];
 
             if ($tokens > $warnThreshold) {
                 $this->isLimitWarning = true;
@@ -78,13 +79,13 @@ class DoctrineThrottler implements ThrottlerInterface
         /////////// get the sum of all tokens for the past number of buckets
 
         // current bucket timeBlock
-        $timeBlock = $time - ($time % $this->bucketSize);
+        $timeBlock = $time - ($time % $this->config['bucket_size']);
 
         // earliest bucket timeBlock
-        $earliestTimeBlock = ($timeBlock - ($this->bucketSize * ($this->numBuckets-1)));
+        $earliestTimeBlock = ($timeBlock - ($this->config['bucket_size'] * ($this->config['num_buckets']-1)));
 
         $query = $this->_em->createQuery('SELECT SUM(l.tokens) as total, MAX(l.time_block) as latest
-            FROM Perimeter\RateLimitBundle\Entity\RateLimitBucket l 
+            FROM Perimeter\RateLimitBundle\Entity\RateLimitBucket l
             WHERE l.meter_id = ?1 AND l.time_block >= ?2
             ORDER BY l.time_block DESC');
 
@@ -93,14 +94,14 @@ class DoctrineThrottler implements ThrottlerInterface
 
         $result = $query->getOneOrNullResult();
 
-        $average = $result['total'] / $this->numBuckets;
+        $average = $result['total'] / $this->config['num_buckets'];
 
         /////////// get or create the current bucket
 
         // only query for the bucket if it exists
         if ($result['latest'] == $timeBlock) {
             $query = $this->_em->createQuery('SELECT l
-                FROM Perimeter\RateLimitBundle\Entity\RateLimitBucket l 
+                FROM Perimeter\RateLimitBundle\Entity\RateLimitBucket l
                 WHERE l.meter_id = ?1 AND l.time_block = ?2
                 ORDER BY l.time_block DESC');
 

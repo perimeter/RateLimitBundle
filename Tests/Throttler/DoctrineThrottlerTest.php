@@ -25,12 +25,15 @@ class DoctrineThrottlerTest extends \PHPUnit_Framework_TestCase
         $container = ContainerLoader::buildTestContainer();
         $em = $container->get('doctrine.orm.entity_manager');
 
-        $bucketSize = 300; // five minute buckets
-        $numBuckets = 2;   // two of them
-        $throttler = new DoctrineThrottler($em, $bucketSize, $numBuckets);
+        $config = array(
+            'bucket_size' => 300, // five minute buckets
+            'num_buckets' => 2,   // two of them
+        );
+
+        $throttler = new DoctrineThrottler($em, $config);
 
         $time = time();
-        $timeBlock  = $time - ($time % $bucketSize);
+        $timeBlock  = $time - ($time % $config['bucket_size']);
 
         $meterId = 'meter-id-'.mt_rand();
 
@@ -61,7 +64,7 @@ class DoctrineThrottlerTest extends \PHPUnit_Framework_TestCase
         // set a ten-minute-ago bucket, and ensure the average is not used
         $bucket = new RateLimitBucket;
         $bucket->meter_id = $meterId;
-        $bucket->time_block = $timeBlock - ($bucketSize * 2);
+        $bucket->time_block = $timeBlock - ($config['bucket_size'] * 2);
         $bucket->tokens = 5; /* (5 + 3) / 3 == 4, so if it averaged, thresholds would be exceeded */
         $em->persist($bucket);
         $em->flush();
@@ -74,7 +77,7 @@ class DoctrineThrottlerTest extends \PHPUnit_Framework_TestCase
         // set a five-minute-ago bucket, and ensure the average is used
         $bucket = new RateLimitBucket;
         $bucket->meter_id = $meterId;
-        $bucket->time_block = $timeBlock - $bucketSize;
+        $bucket->time_block = $timeBlock - $config['bucket_size'];
         $bucket->tokens = 6; /* (6 + 4) / 2 == 5, so thresholds should be exceeded */
 
         $em->persist($bucket);

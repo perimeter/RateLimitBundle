@@ -15,39 +15,22 @@ use Predis\ClientInterface;
 
 class RedisThrottler implements ThrottlerInterface
 {
-    protected $redisClient;
-    protected $serverCount;
-    protected $bucketSize;
-    protected $numBuckets;
-    protected $ratePeriod;
-    protected $debug;
     protected $redis;
+    protected $config;
+    protected $debug;
     protected $limitWarning;
     protected $limitExceeded;
 
-    public function __construct(ClientInterface $redisClient, $serverCount, $numBuckets = 5, $bucketSize = 60, $ratePeriod = 3600, $debug = false)
+    public function __construct(ClientInterface $redis, $config = array(), $debug = false)
     {
-        if ($serverCount < 1) {
-            $serverCount = 1;
-        }
+        $this->config = array_merge(array(
+            'server_count' => 1,
+            'num_buckets'  => 5,
+            'bucket_size'  => 60,
+            'rate_period'  => 3600,
+        ), $config);
 
-        if ($bucketSize < 1) {
-            $bucketSize = 1;
-        }
-
-        if ($numBuckets < 1) {
-            $numBuckets = 1;
-        }
-
-        if ($ratePeriod < 1) {
-            $ratePeriod = 1;
-        }
-
-        $this->redisClient = $redisClient;
-        $this->serverCount = $serverCount;
-        $this->bucketSize = $bucketSize;
-        $this->numBuckets = $numBuckets;
-        $this->ratePeriod = $ratePeriod;
+        $this->redis = $redis;
         $this->debug = $debug;
     }
 
@@ -60,11 +43,11 @@ class RedisThrottler implements ThrottlerInterface
             $time = time();
         }
 
-        //Create $numBuckets of $bucketSize seconds
-        $buckets[0] = $time - ($time % $this->bucketSize); //Align to $bucketSize second boundaries
+        //Create $config['num_buckets'] of $config['bucket_size'] seconds
+        $buckets[0] = $time - ($time % $this->config['bucket_size']); //Align to $config['bucket_size'] second boundaries
 
-        for ($i=1;$i<$this->numBuckets;$i++) {
-            $buckets[$i] = $buckets[$i-1] - $this->bucketSize;
+        for ($i=1; $i < $this->config['num_buckets']; $i++) {
+            $buckets[$i] = $buckets[$i-1] - $this->config['bucket_size'];
         }
 
         //Build list of redis keys for each bucket
@@ -74,16 +57,16 @@ class RedisThrottler implements ThrottlerInterface
 
         try {
             //Incr current bucket
-            $this->redisClient->incrby($keys[0], $numTokens);
+            $this->redis->incrby($keys[0], $numTokens);
 
             //Expire current bucket at the appropriate time (plus a hashed offset to stagger expirations)
-            $this->redisClient->expireat($keys[0], $buckets[0]+($this->bucketSize*$this->numBuckets));
+            $this->redis->expireat($keys[0], $buckets[0] + ($this->config['bucket_size'] * $this->config['num_buckets']));
 
             //Multi-get all buckets
-            $rates = call_user_func_array(array($this->redisClient, 'mget'), $keys);
+            $rates = call_user_func_array(array($this->redis, 'mget'), $keys);
 
             //Extrapolate rate and account for total number of servers
-            $actual = (array_sum($rates)/$this->numBuckets) * ($this->ratePeriod / $this->bucketSize) * $this->serverCount;
+            $actual = (array_sum($rates) / $this->config['num_buckets']) * ($this->config['rate_period'] / $this->config['bucket_size']) * $this->config['server_count'];
 
             //Check rate against configured limits
             if ($actual > $limitThreshold) {
@@ -91,7 +74,6 @@ class RedisThrottler implements ThrottlerInterface
             } elseif ($actual > $warnThreshold) {
                 $this->limitWarning = true;
             }
-
         } catch (\Exception $e) {
             if ($this->debug) {
                 throw $e;

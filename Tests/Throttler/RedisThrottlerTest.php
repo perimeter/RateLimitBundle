@@ -32,7 +32,13 @@ class RedisThrottlerTest extends \PHPUnit_Framework_TestCase
             ->with('meter:test:10000', 'meter:test:9999')
             ->will($this->returnValue(array(2, null)));
 
-        $throttler = new RedisThrottler($client, 1, 2, 1, 1, true);
+        $config = array(
+            'num_buckets' => 2,
+            'bucket_size' => 1,
+            'rate_period' => 1,
+        );
+
+        $throttler = new RedisThrottler($client, $config, true);
         $throttler->consume('test', 1, 2, 1, 2, 10000);
 
         $this->assertFalse($throttler->isLimitWarning());
@@ -55,7 +61,7 @@ class RedisThrottlerTest extends \PHPUnit_Framework_TestCase
             ->with('meter:test:10001', 'meter:test:10000')
             ->will($this->returnValue(array(2, 2)));
 
-        $throttler = new RedisThrottler($client, 1, 2, 1, 1, true);
+        $throttler = new RedisThrottler($client, $config, true);
         $throttler->consume('test', 1, 2, 1, 2, 10001);
 
         $this->assertTrue($throttler->isLimitWarning());
@@ -78,7 +84,7 @@ class RedisThrottlerTest extends \PHPUnit_Framework_TestCase
             ->with('meter:test:10001', 'meter:test:10000')
             ->will($this->returnValue(array(4, 2)));
 
-        $throttler = new RedisThrottler($client, 1, 2, 1, 1, true);
+        $throttler = new RedisThrottler($client, $config, true);
         $throttler->consume('test', 1, 2, 1, 2, 10001);
 
         $this->assertFalse($throttler->isLimitWarning());
