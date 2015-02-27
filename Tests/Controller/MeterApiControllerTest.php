@@ -28,7 +28,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->once())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { return json_encode($variables['meters']); }));
+            ->will($this->returnCallback(function ($template, $variables) { return json_encode($variables['meters']); }));
 
         $controller = new MeterApiController($storage, $templating);
 
@@ -53,7 +53,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->once())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { return json_encode($variables['meters']); }));
+            ->will($this->returnCallback(function ($template, $variables) { return json_encode($variables['meters']); }));
 
         $controller = new MeterApiController($storage, $templating);
 
@@ -78,7 +78,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->once())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { return json_encode($variables['meters']); }));
+            ->will($this->returnCallback(function ($template, $variables) { return json_encode($variables['meters']); }));
 
         $controller = new MeterApiController($storage, $templating);
 
@@ -95,12 +95,12 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
         $storage->expects($this->exactly(2))
             ->method('addMeter')
-            ->will($this->returnCallback(function($meterData) { return $meterData; }));
+            ->will($this->returnCallback(function ($meterData) { return $meterData; }));
 
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->any())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { 
+            ->will($this->returnCallback(function ($template, $variables) {
                 return strpos($template, 'error') ? json_encode(array('error' => $variables['error'])) : json_encode($variables['meter']);
             }));
 
@@ -156,7 +156,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->any())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { 
+            ->will($this->returnCallback(function ($template, $variables) {
                 return strpos($template, 'error') ? json_encode(array('error' => $variables['error'])) : json_encode($variables['meter']);
             }));
 
@@ -201,7 +201,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->any())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { 
+            ->will($this->returnCallback(function ($template, $variables) {
                 return strpos($template, 'error') ? json_encode(array('error' => $variables['error'])) : '';
             }));
 

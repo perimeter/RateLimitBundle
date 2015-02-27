@@ -11,11 +11,6 @@
 
 namespace Perimeter\RateLimitBundle\Tests;
 
-use Perimeter\RateLimitBundle\Tests\ContainerLoader;
-use Perimeter\RateLimitBundle\Entity\RateLimitBucket;
-use Perimeter\RateLimitBundle\Throttler\DoctrineThrottler;
-use Doctrine\Common\Annotations\AnnotationRegistry;
-
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
     public function testContainerServices()

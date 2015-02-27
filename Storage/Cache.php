@@ -13,7 +13,7 @@ namespace Perimeter\RateLimitBundle\Storage;
 
 use Perimeter\CacheBundle\Cache\CacheServiceInterface;
 
-class CacheService implements MeterStorageInterface
+class Cache implements MeterStorageInterface
 {
     protected $cacheService;
     protected $meterStorage;

@@ -15,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * RateLimitMeter
- * 
+ *
  * Doctrine2 Entity for RateLimit Meters
  *
  * @ORM\Entity

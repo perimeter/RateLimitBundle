@@ -13,7 +13,7 @@ namespace Perimeter\RateLimitBundle\Tests\Storage;
 
 use Perimeter\RateLimitBundle\Storage\Memory;
 
-class Memoryest extends \PHPUnit_Framework_TestCase
+class MemoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetMeter()
     {

@@ -22,7 +22,7 @@ class OverLimitControllerTest extends \PHPUnit_Framework_TestCase
         $templating = $this->getMock('Symfony\Bundle\FrameworkBundle\Templating\EngineInterface');
         $templating->expects($this->any())
             ->method('render')
-            ->will($this->returnCallback(function($template, $variables) { return $template; }));
+            ->will($this->returnCallback(function ($template, $variables) { return $template; }));
 
         $controller = new OverLimitController($templating);
 

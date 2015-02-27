@@ -18,7 +18,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
-* 
+*
 */
 class MeterCommand extends ContainerAwareCommand
 {
@@ -30,10 +30,10 @@ class MeterCommand extends ContainerAwareCommand
             ->setHelp(<<<EOF
 The <comment>%command.name%</comment> task creates, updates, and deletes meters according to your perimeter.rate_limit.storage.admin service
 
-GET a meter: 
+GET a meter:
     <comment>%command.name%</comment> [meter_id]
 
-CREATE or UPDATE a meter: 
+CREATE or UPDATE a meter:
     <comment>%command.name%</comment> [meter_id] [warn_threshold] [limit_threshold] ...
 
 DELETE a meter

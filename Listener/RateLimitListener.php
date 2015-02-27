@@ -18,7 +18,6 @@ use Perimeter\RateLimitBundle\Exception\RateLimitException;
 use Perimeter\RateLimitBundle\Storage\MeterStorageInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

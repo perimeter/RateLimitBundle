@@ -16,7 +16,7 @@ use Perimeter\RateLimitBundle\Command\MeterCommand;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
 
-class CreateClientCommandTest extends \PHPUnit_Framework_TestCase
+class MeterCommandTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetMeter()
     {

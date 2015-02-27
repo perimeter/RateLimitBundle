@@ -44,7 +44,7 @@ class MeterApiController extends Controller
         if ($meterId = $request->get('meter_id')) {
             $meter  = $this->meterStorage->findOneByMeterId($meterId);
             $meters = $meter ? array($meter) : array(); // stay consistent
-        } else if ($search = $request->get('search')) {
+        } elseif ($search = $request->get('search')) {
             $meters = $this->meterStorage->findBySearch($search, $limit, $page);
         } else {
             $meters = $this->meterStorage->findAll($limit, $page);
@@ -57,7 +57,7 @@ class MeterApiController extends Controller
 
         return $this->createResponseObject($content);
     }
-    
+
     public function postAction(Request $request)
     {
         $format = $request->get('_format');
@@ -69,11 +69,11 @@ class MeterApiController extends Controller
         if ($this->meterStorage->findOneByMeterId($meterId)) {
             return $this->createErrorResponse('a meter already exists for this meter_id', $format);
         }
-        
+
         if (!$rate = $request->get('rate')) {
             return $this->createErrorResponse('rate is a required parameter', $format);
         }
-        
+
         $meterData = array_filter(array(
             'meter_id'     => $meterId,
             'type'         => $request->get('type'),
@@ -95,9 +95,9 @@ class MeterApiController extends Controller
             array('meter' => $meter)
         );
 
-        return $this->createResponseObject($content, 201); // Status Code: 201 Created 
+        return $this->createResponseObject($content, 201); // Status Code: 201 Created
     }
-    
+
     public function putAction(Request $request)
     {
         $format = $request->get('_format');
@@ -132,7 +132,7 @@ class MeterApiController extends Controller
 
         return $this->createResponseObject($content);
     }
-    
+
     public function deleteAction(Request $request)
     {
         $format = $request->get('_format');
