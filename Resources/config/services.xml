@@ -61,7 +61,6 @@
             <argument type="service" id="perimeter.rate_limit.meter_resolver" />
             <argument type="service" id="perimeter.rate_limit.storage" />
             <argument type="service" id="perimeter.rate_limit.over_limit_controller" />
-            <argument>PerimeterRateLimitBundle::limit.:format.twig</argument>
             <argument>%kernel.debug%</argument>
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
             <tag name="kernel.event_listener" event="kernel.response" method="onKernelResponse" />
