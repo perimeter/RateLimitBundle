@@ -25,7 +25,7 @@ class RedisThrottler implements ThrottlerInterface
     protected $limitWarning;
     protected $limitExceeded;
 
-    public function __construct(ClientInterface $redisClient, $serverCount, $bucketSize = 60, $numBuckets = 5, $ratePeriod = 3600, $debug = false)
+    public function __construct(ClientInterface $redisClient, $serverCount, $numBuckets = 5, $bucketSize = 60, $ratePeriod = 3600, $debug = false)
     {
         if ($serverCount < 1) {
             $serverCount = 1;

@@ -13,8 +13,8 @@
         <parameter key="perimeter.rate_limit.redis_client.server_count">1</parameter>
         <parameter key="perimeter.rate_limit.redis_client.parameters" />
         <parameter key="perimeter.rate_limit.redis_client.options" />
-        <parameter key="perimeter.rate_limit.bucket_size">60</parameter>
         <parameter key="perimeter.rate_limit.num_buckets">5</parameter>
+        <parameter key="perimeter.rate_limit.bucket_size">60</parameter>
         <parameter key="perimeter.rate_limit.rate_period">3600</parameter>
         <parameter key="perimeter.rate_limit.warn_threshold.default">80</parameter>
         <parameter key="perimeter.rate_limit.limit_threshold.default">100</parameter>
