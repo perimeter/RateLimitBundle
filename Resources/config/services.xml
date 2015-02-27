@@ -10,6 +10,12 @@
         <parameter key="perimeter.rate_limit.throttler.redis.class">Perimeter\RateLimitBundle\Throttler\RedisThrottler</parameter>
         <parameter key="perimeter.rate_limit.throttler.doctrine.class">Perimeter\RateLimitBundle\Throttler\DoctrineThrottler</parameter>
         <parameter key="perimeter.rate_limit.redis_client.class">Predis\Client</parameter>
+        <parameter key="perimeter.rate_limit.redis_client.server_count">1</parameter>
+        <parameter key="perimeter.rate_limit.redis_client.parameters" />
+        <parameter key="perimeter.rate_limit.redis_client.options" />
+        <parameter key="perimeter.rate_limit.bucket_size">60</parameter>
+        <parameter key="perimeter.rate_limit.num_buckets">5</parameter>
+        <parameter key="perimeter.rate_limit.rate_period">3600</parameter>
         <parameter key="perimeter.rate_limit.warn_threshold.default">80</parameter>
         <parameter key="perimeter.rate_limit.limit_threshold.default">100</parameter>
         <parameter key="perimeter.rate_limit.storage.memory.meters" type="collection">
@@ -22,37 +28,38 @@
     <services>
         <service id="perimeter.rate_limit.throttler" alias="perimeter.rate_limit.throttler.redis" />
         <service id="perimeter.rate_limit.redis_client" class="%perimeter.rate_limit.redis_client.class%">
-            <argument id="perimeter.rate_limit.redis_client.url"/>
+            <argument>%perimeter.rate_limit.redis_client.parameters%</argument>
+            <argument>%perimeter.rate_limit.redis_client.options%</argument>
         </service>
         <service id="perimeter.rate_limit.throttler.redis" class="%perimeter.rate_limit.throttler.redis.class%">
             <argument type="service" id="perimeter.rate_limit.redis_client"/>
-            <argument id="redis.server_count"/>
-            <argument id="perimeter.rate_limit.num_buckets"/>
-            <argument id="perimeter.rate_limit.bucket_size"/>
-            <argument id="perimeter.rate_limit.rate_period"/>
+            <argument>%perimeter.rate_limit.redis_client.server_count%</argument>
+            <argument>%perimeter.rate_limit.num_buckets%</argument>
+            <argument>%perimeter.rate_limit.bucket_size%</argument>
+            <argument>%perimeter.rate_limit.rate_period%</argument>
             <argument>%kernel.debug%</argument>
         </service>
         <service id="perimeter.rate_limit.throttler.doctrine" class="%perimeter.rate_limit.throttler.doctrine.class%">
             <argument type="service" id="doctrine.orm.entity_manager"/>
-            <argument id="perimeter.rate_limit.num_buckets"/>
-            <argument id="perimeter.rate_limit.bucket_size"/>
-            <argument id="perimeter.rate_limit.rate_period"/>
+            <argument>%perimeter.rate_limit.num_buckets%</argument>
+            <argument>%perimeter.rate_limit.bucket_size%</argument>
+            <argument>%perimeter.rate_limit.rate_period%</argument>
         </service>
         <service id="perimeter.rate_limit.meter_api_controller" class="%perimeter.rate_limit.meter_api_controller.class%">
             <argument type="service" id="perimeter.rate_limit.storage.admin" />
             <argument type="service" id="templating" />
         </service>
-	<service id="perimeter.rate_limit.over_limit_controller" class="%perimeter.rate_limit.over_limit_controller.class%">
-            <argument type="service" id="templating.engine.twig" />
+        <service id="perimeter.rate_limit.over_limit_controller" class="%perimeter.rate_limit.over_limit_controller.class%">
+            <argument type="service" id="templating" />
         </service>
         <service id="perimeter.rate_limit.storage" alias="perimeter.rate_limit.storage.memory" />
         <service id="perimeter.rate_limit.storage.doctrine" class="%perimeter.rate_limit.storage.doctrine.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
         </service>
         <service id="perimeter.rate_limit.storage.memory" class="%perimeter.rate_limit.storage.memory.class%">
-            <argument id="perimeter.rate_limit.storage.memory.meters" />
+            <argument>%perimeter.rate_limit.storage.memory.meters%</argument>
         </service>
-        <service id="perimeter.rate_limit.storage.admin" alias="perimeter.rate_limit.storage" />
+        <service id="perimeter.rate_limit.storage.admin" alias="perimeter.rate_limit.storage.doctrine" />
         <service id="perimeter.rate_limit.meter_resolver" class="%perimeter.rate_limit.meter_resolver.class%">
             <argument type="service" id="security.context" />
         </service>
