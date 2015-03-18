@@ -11,6 +11,7 @@
 
 namespace Perimeter\RateLimitBundle\Storage;
 
+use Perimeter\RateLimitBundle\Entity\RateLimitMeter;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 
@@ -68,7 +69,7 @@ class DoctrineMeterStorage implements MeterStorageInterface, MeterStorageAdminIn
     {
         $offset = ($page-1) * $limit;
 
-        $query = $this->createQueryBuilder('m')
+        $query = $this->_em->createQueryBuilder('m')
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getQuery();

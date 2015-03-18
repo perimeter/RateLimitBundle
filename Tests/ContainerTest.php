@@ -16,7 +16,9 @@ class ContainerTest extends \PHPUnit_Framework_TestCase
     public function testContainerServices()
     {
         // build container from services.xml
-        $container = ContainerLoader::buildTestContainer();
+        if (!$container = ContainerLoader::buildTestContainer()) {
+            return $this->markTestSkipped(ContainerLoader::$errorMessage);
+        }
 
         // mock parameters that should be there from symfony but arent
         $container->setParameter('kernel.debug', true);

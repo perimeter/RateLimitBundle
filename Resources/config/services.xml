@@ -6,7 +6,7 @@
         <parameter key="perimeter.rate_limit.listener.class">Perimeter\RateLimitBundle\Listener\RateLimitListener</parameter>
         <parameter key="perimeter.rate_limit.meter_resolver.class">Perimeter\RateLimitBundle\Resolver\SecurityContextMeterResolver</parameter>
         <parameter key="perimeter.rate_limit.meter_api_controller.class">Perimeter\RateLimitBundle\Controller\MeterApiController</parameter>
-	<parameter key="perimeter.rate_limit.over_limit_controller.class">Perimeter\RateLimitBundle\Controller\OverLimitController</parameter>
+        <parameter key="perimeter.rate_limit.over_limit_controller.class">Perimeter\RateLimitBundle\Controller\OverLimitController</parameter>
         <parameter key="perimeter.rate_limit.throttler.redis.class">Perimeter\RateLimitBundle\Throttler\RedisThrottler</parameter>
         <parameter key="perimeter.rate_limit.throttler.doctrine.class">Perimeter\RateLimitBundle\Throttler\DoctrineThrottler</parameter>
         <parameter key="perimeter.rate_limit.redis_client.class">Predis\Client</parameter>
@@ -25,7 +25,7 @@
             <parameter key="rate_period">%perimeter.rate_limit.rate_period%</parameter>
         </parameter>
         <parameter key="perimeter.rate_limit.storage.memory.meters" type="collection">
-            <parameter key="*" type="collection">
+            <parameter key="::DEFAULT::" type="collection">
                 <parameter key="warn_threshold">%perimeter.rate_limit.warn_threshold.default%</parameter>
                 <parameter key="limit_threshold">%perimeter.rate_limit.limit_threshold.default%</parameter>
             </parameter>
