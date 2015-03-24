@@ -24,7 +24,9 @@ Doctrine\Common\Annotations\AnnotationRegistry::registerFile(__DIR__.'/../vendor
 
 if (!empty($_SERVER['UPDATE_DOCTRINE_DB'])) {
     // build the database
-    $container = Perimeter\RateLimitBundle\Tests\ContainerLoader::buildTestContainer();
+    if (!$container = Perimeter\RateLimitBundle\Tests\ContainerLoader::buildTestContainer()) {
+        throw new Exception('Cannot update Doctrine DB: '.ContainerLoader::$errorMessage);
+    }
     $em = $container->get('doctrine.orm.entity_manager');
     $metadatas = $em->getMetadataFactory()->getAllMetadata();
 

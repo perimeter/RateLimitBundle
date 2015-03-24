@@ -18,7 +18,10 @@ class RateLimitMeterTest extends \PHPUnit_Framework_TestCase
 {
     public function testPersist()
     {
-        $container = ContainerLoader::buildTestContainer();
+        if (!$container = ContainerLoader::buildTestContainer()) {
+            return $this->markTestSkipped(ContainerLoader::$errorMessage);
+        }
+
         $em = $container->get('doctrine.orm.entity_manager');
 
         $meter = new RateLimitMeter();

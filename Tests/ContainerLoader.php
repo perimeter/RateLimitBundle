@@ -17,10 +17,14 @@ use Symfony\Component\Config\FileLocator;
 
 class ContainerLoader
 {
+    public static $errorMessage;
+
     public static function buildTestContainer()
     {
         if (!isset($_SERVER['CONTAINER_CONFIG'])) {
-            throw new \Exception('Must set CONTAINER_CONFIG in phpunit.xml or environment variable');
+            self::$errorMessage = 'Must set CONTAINER_CONFIG in phpunit.xml or environment variable';
+
+            return;
         }
 
         $container = new ContainerBuilder();

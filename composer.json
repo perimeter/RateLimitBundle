@@ -29,7 +29,7 @@
         "predis/predis":                    "1.0.*"
     },
     "autoload": {
-        "psr-4": { 
+        "psr-4": {
             "Perimeter\\RateLimitBundle\\": ""
         }
     }

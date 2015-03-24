@@ -22,7 +22,10 @@ class DoctrineThrottlerTest extends \PHPUnit_Framework_TestCase
     {
         AnnotationRegistry::registerFile(__DIR__.'/../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
 
-        $container = ContainerLoader::buildTestContainer();
+        if (!$container = ContainerLoader::buildTestContainer()) {
+            return $this->markTestSkipped(ContainerLoader::$errorMessage);
+        }
+
         $em = $container->get('doctrine.orm.entity_manager');
 
         $config = array(
