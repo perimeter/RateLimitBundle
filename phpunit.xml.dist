@@ -2,8 +2,7 @@
 <phpunit
   bootstrap="./Tests/bootstrap.php"
   backupGlobals="false"
-  backupStaticAttributes="false"
-  convertErrorsToExceptions="false">
+  backupStaticAttributes="false">
   <php>
     <server name="CONTAINER_CONFIG" value="Tests/Resources/config/services.xml" />
   </php>

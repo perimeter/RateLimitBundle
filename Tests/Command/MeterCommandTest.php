@@ -15,11 +15,16 @@ use Symfony\Component\DependencyInjection\Container;
 use Perimeter\RateLimitBundle\Command\MeterCommand;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpKernel\Kernel;
 
 class MeterCommandTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetMeter()
     {
+        if (version_compare(Kernel::VERSION, '2.4.0', '<')) {
+            return $this->markTestSkipped('this test is not available for symfony 2.3');
+        }
+
         $meterId = 'meter-id-'.rand();
 
         $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
