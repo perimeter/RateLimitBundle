@@ -6,8 +6,9 @@ php:
   - 5.5
 
 env:
-  - SYMFONY_VERSION=2.3.*
-  - SYMFONY_VERSION=2.6.*
+  matrix:
+    - SYMFONY_VERSION=2.3.*
+    - SYMFONY_VERSION=2.6.*
   global:
     - CONTAINER_CONFIG=Tests/Resources/config/services.xml
     - UPDATE_DOCTRINE_DB=true
