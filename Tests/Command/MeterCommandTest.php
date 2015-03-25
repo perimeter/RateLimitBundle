@@ -60,6 +60,10 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testDeleteMeter()
     {
+        if (version_compare(Kernel::VERSION, '2.4.0', '<')) {
+            return $this->markTestSkipped('this test is not available for symfony 2.3');
+        }
+
         $meterId = 'meter-id-'.rand();
 
         $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
@@ -132,6 +136,10 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateMeter()
     {
+        if (version_compare(Kernel::VERSION, '2.4.0', '<')) {
+            return $this->markTestSkipped('this test is not available for symfony 2.3');
+        }
+
         $meterId = 'meter-id-'.rand();
 
         $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
