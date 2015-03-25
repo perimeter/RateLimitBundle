@@ -4,12 +4,16 @@ php:
   - 5.3
   - 5.4
   - 5.5
+
 env:
+  - SYMFONY_VERSION=2.3.*
+  - SYMFONY_VERSION=2.6.*
   global:
     - CONTAINER_CONFIG=Tests/Resources/config/services.xml
     - UPDATE_DOCTRINE_DB=true
+
 before_script:
-  - composer install
+  - composer require --prefer-source --dev symfony/symfony:${SYMFONY_VERSION}
   - cp phpunit.xml.dist phpunit.xml
   - mysql -e 'create database perimeter;'
 
