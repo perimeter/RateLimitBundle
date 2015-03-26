@@ -22,13 +22,13 @@ class RateLimitListenerTest extends \PHPUnit_Framework_TestCase
     public function testOnKernelRequest()
     {
         // create a mock resolver
-        $resolver = $this->getMock('Perimeter\RateLimitBundle\Resolver\MeterResolverInterface');
+        $resolver = $this->getMock('Perimeter\RateLimiter\Resolver\MeterResolverInterface');
         $resolver->expects($this->any())
              ->method('getMeterIdentifier')
              ->will($this->returnValue('test'));
 
         // create mock storage service that will return a test meter
-        $storage = $this->getMockBuilder('Perimeter\RateLimitBundle\Storage\MeterStorageInterface')
+        $storage = $this->getMockBuilder('Perimeter\RateLimiter\Storage\MeterStorageInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $storage->expects($this->any())
@@ -52,7 +52,7 @@ class RateLimitListenerTest extends \PHPUnit_Framework_TestCase
              ->will($this->returnValue(new Response('{"error":"request over limit"}')));
 
         // create mock throttler
-        $throttler = $this->getMockBuilder('Perimeter\RateLimitBundle\Throttler\ThrottlerInterface')
+        $throttler = $this->getMockBuilder('Perimeter\RateLimiter\Throttler\ThrottlerInterface')
             ->disableOriginalConstructor()
             ->getMock();
         $throttler->expects($this->once())

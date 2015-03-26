@@ -11,7 +11,7 @@
 
 namespace Perimeter\RateLimitBundle\Controller;
 
-use Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface;
+use Perimeter\RateLimiter\Storage\MeterStorageAdminInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\HttpFoundation\Request;

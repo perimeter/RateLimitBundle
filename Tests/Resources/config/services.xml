@@ -10,7 +10,7 @@
         <parameter key="doctrine.db.dbname">perimeter</parameter>
         <parameter key="doctrine.db.host">localhost</parameter>
         <parameter key="doctrine.config_paths" type="collection">
-            <parameter>%bundle_root_dir%/Entity</parameter>
+            <parameter>%bundle_root_dir%/vendor/perimeter/rate-limiter-php/Entity</parameter>
         </parameter>
     </parameters>
     <services>
@@ -31,7 +31,7 @@
             </call>
             <call method="setEntityNamespaces">
                 <argument type="collection">
-                    <argument key="PerimeterRateLimitBundle">Perimeter\RateLimitBundle\Entity</argument>
+                    <argument key="PerimeterRateLimitBundle">Perimeter\RateLimiter\Entity</argument>
                 </argument>
             </call>
         </service>

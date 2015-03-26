@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <parameters>
-        <parameter key="perimeter.rate_limit.storage.doctrine.class">Perimeter\RateLimitBundle\Storage\DoctrineMeterStorage</parameter>
-        <parameter key="perimeter.rate_limit.storage.memory.class">Perimeter\RateLimitBundle\Storage\Memory</parameter>
+        <parameter key="perimeter.rate_limit.storage.doctrine.class">Perimeter\RateLimiter\Storage\DoctrineMeterStorage</parameter>
+        <parameter key="perimeter.rate_limit.storage.memory.class">Perimeter\RateLimiter\Storage\Memory</parameter>
         <parameter key="perimeter.rate_limit.listener.class">Perimeter\RateLimitBundle\Listener\RateLimitListener</parameter>
         <parameter key="perimeter.rate_limit.meter_resolver.class">Perimeter\RateLimitBundle\Resolver\SecurityContextMeterResolver</parameter>
         <parameter key="perimeter.rate_limit.meter_api_controller.class">Perimeter\RateLimitBundle\Controller\MeterApiController</parameter>
         <parameter key="perimeter.rate_limit.over_limit_controller.class">Perimeter\RateLimitBundle\Controller\OverLimitController</parameter>
-        <parameter key="perimeter.rate_limit.throttler.redis.class">Perimeter\RateLimitBundle\Throttler\RedisThrottler</parameter>
-        <parameter key="perimeter.rate_limit.throttler.doctrine.class">Perimeter\RateLimitBundle\Throttler\DoctrineThrottler</parameter>
+        <parameter key="perimeter.rate_limit.throttler.redis.class">Perimeter\RateLimiter\Throttler\RedisThrottler</parameter>
+        <parameter key="perimeter.rate_limit.throttler.doctrine.class">Perimeter\RateLimiter\Throttler\DoctrineThrottler</parameter>
         <parameter key="perimeter.rate_limit.redis_client.class">Predis\Client</parameter>
         <parameter key="perimeter.rate_limit.redis_client.server_count">1</parameter>
         <parameter key="perimeter.rate_limit.redis_client.parameters" />

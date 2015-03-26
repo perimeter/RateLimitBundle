@@ -11,11 +11,11 @@
 
 namespace Perimeter\RateLimitBundle\Listener;
 
-use Perimeter\RateLimitBundle\Throttler\ThrottlerInterface;
-use Perimeter\RateLimitBundle\Resolver\MeterResolverInterface;
-use Perimeter\RateLimitBundle\Resolver\MultipleMeterResolverInterface;
-use Perimeter\RateLimitBundle\Exception\RateLimitException;
-use Perimeter\RateLimitBundle\Storage\MeterStorageInterface;
+use Perimeter\RateLimiter\Throttler\ThrottlerInterface;
+use Perimeter\RateLimiter\Resolver\MeterResolverInterface;
+use Perimeter\RateLimiter\Resolver\MultipleMeterResolverInterface;
+use Perimeter\RateLimiter\Exception\RateLimitException;
+use Perimeter\RateLimiter\Storage\MeterStorageInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\Response;

@@ -27,7 +27,7 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
 
         $meterId = 'meter-id-'.rand();
 
-        $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $admin = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $admin->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(null));
@@ -45,7 +45,7 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $statusCode);
         $this->assertTrue(false !== strpos($output->fetch(), sprintf('meter %s does not exist', $meterId)));
 
-        $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $admin = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $admin->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(array('meter_id' => $meterId)));
@@ -66,7 +66,7 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
 
         $meterId = 'meter-id-'.rand();
 
-        $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $admin = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $admin->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(null));
@@ -84,7 +84,7 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $statusCode);
         $this->assertTrue(false !== strpos($output->fetch(), sprintf('cannot delete: meter %s does not exist', $meterId)));
 
-        $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $admin = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $admin->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(array('meter_id' => $meterId)));
@@ -108,7 +108,7 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
 
         $meterId = 'meter-id-'.rand();
 
-        $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $admin = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $admin->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(null));
@@ -146,7 +146,7 @@ class MeterCommandTest extends \PHPUnit_Framework_TestCase
 
         $meterId = 'meter-id-'.rand();
 
-        $admin = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $admin = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $admin->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(array(

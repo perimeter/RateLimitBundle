@@ -87,7 +87,7 @@ Be sure to run the following command to create the `rate_limit_bucket` table in 
 
     php vendor/doctrine/orm/bin/doctrine orm:schema-tool:update --force
 
-Now, configure your container to use `Perimeter\RateLimitBundle\Throttler\DoctrineThrottler` by making the throttler service ID an alias to the doctrine throttler:
+Now, configure your container to use `Perimeter\RateLimiter\Throttler\DoctrineThrottler` by making the throttler service ID an alias to the doctrine throttler:
 
 ```xml
 <services>

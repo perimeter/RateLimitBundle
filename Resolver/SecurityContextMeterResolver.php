@@ -11,6 +11,7 @@
 
 namespace Perimeter\RateLimitBundle\Resolver;
 
+use Perimeter\RateLimiter\Resolver\MeterResolverInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 
 class SecurityContextMeterResolver implements MeterResolverInterface

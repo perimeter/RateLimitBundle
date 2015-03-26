@@ -18,7 +18,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
 {
     public function testGetMeterId()
     {
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(
@@ -43,7 +43,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSearch()
     {
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findBySearch')
             ->will($this->returnValue(array(
@@ -68,7 +68,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAll()
     {
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue(array(
@@ -92,7 +92,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testPost()
     {
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->exactly(2))
             ->method('addMeter')
             ->will($this->returnCallback(function ($meterData) { return $meterData; }));
@@ -148,7 +148,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testPut()
     {
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(false));
@@ -176,7 +176,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('{"error":"meter_id not found"}', $response->getContent());
 
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(array('meter_id' => 1)));
@@ -193,7 +193,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testDelete()
     {
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(false));
@@ -221,7 +221,7 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('{"error":"meter_id not found"}', $response->getContent());
 
-        $storage = $this->getMock('Perimeter\RateLimitBundle\Storage\MeterStorageAdminInterface');
+        $storage = $this->getMock('Perimeter\RateLimiter\Storage\MeterStorageAdminInterface');
         $storage->expects($this->once())
             ->method('findOneByMeterId')
             ->will($this->returnValue(array('meter_id' => 1)));
