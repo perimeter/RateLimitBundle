@@ -24,6 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class OverLimitController
 {
+    // uses class constant because HTTP Foundation 2.3 does not support this constant
+    const HTTP_TOO_MANY_REQUESTS = 429;
+
     protected $templating;
 
     public function __construct(EngineInterface $templating)
@@ -42,6 +45,6 @@ class OverLimitController
             );
         }
 
-        return new Response($content, Response::HTTP_TOO_MANY_REQUESTS);
+        return new Response($content, self::HTTP_TOO_MANY_REQUESTS);
     }
 }

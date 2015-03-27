@@ -22,7 +22,7 @@
     "minimum-stability":"dev",
     "require": {
         "php": ">=5.3.0",
-        "symfony/symfony": "~2.3",
+        "symfony/symfony": "2.3.*",
         "perimeter/rate-limiter-php": "dev-develop"
     },
     "require-dev": {
