@@ -36,4 +36,30 @@ class SecurityContextMeterResolverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($username, $resolver->getMeterIdentifier());
     }
+
+    public function testGetMeterIdentifierCaseInsensitive()
+    {
+        // create a mock token
+        $username = 'somelogin:test company '.rand();
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token->expects($this->any())
+             ->method('getUsername')
+             ->will($this->returnValue(strtoupper($username)));
+
+        // create a mock security context for the token
+        $context = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContext')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $context->expects($this->any())
+             ->method('getToken')
+             ->will($this->returnValue($token));
+
+        $resolver = new SecurityContextMeterResolver($context, array('case_insensitive' => false));
+
+        $this->assertNotEquals($username, $resolver->getMeterIdentifier());
+
+        $resolver = new SecurityContextMeterResolver($context, array('case_insensitive' => true));
+
+        $this->assertEquals($username, $resolver->getMeterIdentifier());
+    }
 }

@@ -17,10 +17,14 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
 class SecurityContextMeterResolver implements MeterResolverInterface
 {
     protected $securityContext;
+    protected $config;
 
-    public function __construct(SecurityContextInterface $securityContext)
+    public function __construct(SecurityContextInterface $securityContext, $config = array())
     {
         $this->securityContext = $securityContext;
+        $this->config = array_merge(array(
+            'case_insensitive' => true,
+        ), $config);
     }
 
     public function getMeterIdentifier()
@@ -29,6 +33,6 @@ class SecurityContextMeterResolver implements MeterResolverInterface
             return;
         }
 
-        return $token->getUsername();
+        return $this->config['case_insensitive'] ? strtolower($token->getUsername()) : $token->getUsername();
     }
 }
