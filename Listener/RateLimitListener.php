@@ -89,13 +89,11 @@ class RateLimitListener
             'num_tokens'   => 1,
         ), $meter);
 
-        if ($isConsumed = $this->throttler->consume($meter['meter_id'], $meter['warn_threshold'], $meter['limit_threshold'], $meter['num_tokens'], $meter['throttle_ms'])) {
-            if ($this->throttler->isLimitWarning() && $meter['should_warn']) {
-                /* @TODO: Use Response Listener rather than emiting header here */
-                $this->shouldEmitWarningHeader = true;
-            } elseif ($this->throttler->isLimitExceeded() && $meter['should_limit']) {
-                throw new RateLimitException($meter['meter_id']);
-            }
+        $this->throttler->consume($meter['meter_id'], $meter['warn_threshold'], $meter['limit_threshold'], $meter['num_tokens'], $meter['throttle_ms']);
+        if ($this->throttler->isLimitWarning() && $meter['should_warn']) {
+            $this->shouldEmitWarningHeader = true;
+        } elseif ($this->throttler->isLimitExceeded() && $meter['should_limit']) {
+            throw new RateLimitException($meter['meter_id']);
         }
     }
 }

@@ -56,8 +56,7 @@ class RateLimitListenerTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $throttler->expects($this->once())
-            ->method('consume')
-            ->will($this->returnValue(true));
+            ->method('consume');
         $throttler->expects($this->once())
             ->method('isLimitExceeded')
             ->will($this->returnValue(true));
