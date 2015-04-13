@@ -3,6 +3,8 @@ Perimeter RateLimitBundle
 
 [![Build Status](https://travis-ci.org/perimeter/RateLimitBundle.svg?branch=develop)](https://travis-ci.org/perimeter/RateLimitBundle)
 
+Built on top of the stand-alone rate limiting library [rate-limiter-php](https://github.com/perimeter/rate-limiter-php)
+
 Rate Limit those APIs!
 
 Installation
