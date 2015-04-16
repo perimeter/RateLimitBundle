@@ -70,19 +70,17 @@ class MeterApiController extends Controller
             return $this->createErrorResponse('a meter already exists for this meter_id', $format);
         }
 
-        if (!$rate = $request->get('rate')) {
-            return $this->createErrorResponse('rate is a required parameter', $format);
+        if (!$limit_threshold = $request->get('limit_threshold')) {
+            return $this->createErrorResponse('limit_threshold is a required parameter', $format);
         }
 
         $meterData = array_filter(array(
             'meter_id'     => $meterId,
-            'type'         => $request->get('type'),
-            'consume'      => $request->get('consume'),
+            'num_tokens'   => $request->get('num_tokens'),
             'should_warn'  => $request->get('should_warn'),
             'should_limit' => $request->get('should_limit'),
-            'rate'         => $rate,
-            'warn'         => $request->get('warn'),
-            'max'          => $request->get('max'),
+            'limit_threshold' => $limit_threshold,
+            'warn_threshold'  => $request->get('warn_threshold'),
             'throttle_ms'  => $request->get('throttle_ms'),
         ), 'self::filterNullValues');
 
@@ -111,13 +109,11 @@ class MeterApiController extends Controller
         }
 
         $meterData = array_merge($meter, array_filter(array(
-            'type'         => $request->get('type'),
-            'consume'      => $request->get('consume'),
+            'num_tokens'   => $request->get('num_tokens'),
             'should_warn'  => $request->get('should_warn'),
             'should_limit' => $request->get('should_limit'),
-            'rate'         => $request->get('rate'),
-            'warn'         => $request->get('warn'),
-            'max'          => $request->get('max'),
+            'limit_threshold' => $request->get('limit_threshold'),
+            'warn_threshold'  => $request->get('warn_threshold'),
             'throttle_ms'  => $request->get('throttle_ms'),
         ), 'self::filterNullValues'));
 
