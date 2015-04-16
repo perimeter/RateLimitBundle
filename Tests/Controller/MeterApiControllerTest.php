@@ -114,26 +114,26 @@ class MeterApiControllerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('{"error":"meter_id is a required parameter"}', $response->getContent());
 
-        // rate must be set
+        // limit_threshold must be set
         $request->request->set('meter_id', 1);
         $response = $controller->postAction($request);
 
         $this->assertEquals(400, $response->getStatusCode());
-        $this->assertEquals('{"error":"rate is a required parameter"}', $response->getContent());
+        $this->assertEquals('{"error":"limit_threshold is a required parameter"}', $response->getContent());
 
         // successful add
-        $request->request->set('rate', 1);
+        $request->request->set('limit_threshold', 1);
         $response = $controller->postAction($request);
 
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertEquals('{"meter_id":1,"rate":1}', $response->getContent());
+        $this->assertEquals('{"meter_id":1,"limit_threshold":1}', $response->getContent());
 
         // bogus parameter does not get added
         $request->request->set('foo-goop', 1);
         $response = $controller->postAction($request);
 
         $this->assertEquals(201, $response->getStatusCode());
-        $this->assertEquals('{"meter_id":1,"rate":1}', $response->getContent());
+        $this->assertEquals('{"meter_id":1,"limit_threshold":1}', $response->getContent());
 
         // cannot add existing meter_id
         $storage->expects($this->once())
